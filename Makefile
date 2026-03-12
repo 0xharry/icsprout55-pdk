@@ -28,7 +28,13 @@ DECOMP_DIR_GDS       := $(patsubst %_gds.tar.bz2, $(DECOMP_DIR_GDS_STD_P)/%/gds,
 
 DECOMP_DIR := $(DECOMP_DIR_LIB) $(DECOMP_DIR_GDS)
 
-.PHONY: start download unzip clean-bz2 clean-dir
+.PHONY: check-bzip2 start download unzip clean-bz2 clean-dir
+
+check-bzip2:
+	@command -v bzip2 >/dev/null 2>&1 || { \
+		echo "[error] bzip2 command not found. Please install bzip2 first."; \
+		exit 1; \
+	}
 
 $(RELEASE_FILE):
 	@echo "\n[download] getting the latest release info"
@@ -71,7 +77,7 @@ $(DECOMP_DIR_GDS_IO_P)/%/gds: %_gds.tar.bz2
 	@tar -xjvf $< -C $(DECOMP_DIR_GDS_IO_P)/$*/
 	@touch $@
 
-unzip: start clean-dir $(DECOMP_DIR) clean-bz2
+unzip: check-bzip2 start clean-dir $(DECOMP_DIR) clean-bz2
 	@echo "\n[unzip] done!"
 
 start:
