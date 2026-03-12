@@ -35,7 +35,7 @@ DECOMP_DIR := $(DECOMP_DIR_LIB) $(DECOMP_DIR_GDS)
 
 check-bzip2:
 	@command -v bzip2 >/dev/null 2>&1 || { \
-		echo "[error] bzip2 command not found. please install bzip2 first."; \
+		echo "[error] bzip2 command not found. Please install bzip2 first."; \
 		exit 1; \
 	}
 
